@@ -6,17 +6,22 @@
     <title>nielpz Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.css" rel="stylesheet">
 </head>
 <body>
+    <div id="particle-background"></div>
     <header>
         <nav>
             <div class="logo">nielpz</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#timeline">Timeline</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><button id="theme-toggle">Toggle Theme</button></li>
+                <li><button id="theme-selector">Select Theme</button></li>
             </ul>
         </nav>
     </header>
@@ -28,12 +33,12 @@
             <a href="#projects" class="cta">View My Work</a>
         </section>
 
-        <section id="about" class="about">
+        <section id="about" class="about" data-aos="fade-right">
             <h2>About Me</h2>
             <p>I am a developer with experience in web design, front-end development, and creating efficient, user-friendly applications.</p>
         </section>
 
-        <section id="skills" class="skills">
+        <section id="skills" class="skills" data-aos="fade-up">
             <h2>Skills</h2>
             <div class="skills-grid">
                 <div class="skill-card">HTML</div>
@@ -45,7 +50,25 @@
             </div>
         </section>
 
-        <section id="projects" class="projects">
+        <section id="timeline" class="timeline" data-aos="fade-left">
+            <h2>Timeline</h2>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <h3>2024</h3>
+                    <p>Started my journey as a web developer and built my first project portfolio.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2023</h3>
+                    <p>Interned at a tech startup and learned about agile development practices.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2022</h3>
+                    <p>Graduated with a degree in Informatics and began exploring AI technologies.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects" data-aos="zoom-in">
             <h2>Projects</h2>
             <div class="project-grid">
                 <div class="project-card">
@@ -63,7 +86,25 @@
             </div>
         </section>
 
-        <section id="contact" class="contact">
+        <section id="testimonials" class="testimonials" data-aos="fade-up">
+            <h2>Testimonials</h2>
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <p>"Niel is a fantastic developer with a keen eye for design!"</p>
+                    <h3>- Colleague A</h3>
+                </div>
+                <div class="testimonial">
+                    <p>"His projects always exceed expectations."</p>
+                    <h3>- Client B</h3>
+                </div>
+                <div class="testimonial">
+                    <p>"Creative, dedicated, and professional in every aspect."</p>
+                    <h3>- Colleague C</h3>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact" data-aos="fade-up">
             <h2>Contact Me</h2>
             <p>Feel free to reach out via email or connect on GitHub.</p>
             <a href="mailto:youremail@example.com" class="cta">Email Me</a>
@@ -75,20 +116,53 @@
         <p>&copy; 2024 nielpz. All rights reserved.</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
     <script>
-        // Toggle between light and dark mode
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
+        // Initialize AOS animations
+        AOS.init();
+
+        // Initialize Particle.js background
+        particlesJS('particle-background', {
+            "particles": {
+                "number": { "value": 100 },
+                "size": { "value": 3 },
+                "move": { "speed": 1 },
+                "line_linked": { "enable": true }
+            }
         });
 
-        // Add smooth scrolling for anchor links
+        // Theme Selector with multiple options
+        const themes = ["dark-theme", "light-theme", "blue-theme"];
+        let currentThemeIndex = 0;
+
+        const themeSelector = document.getElementById('theme-selector');
+        themeSelector.addEventListener('click', () => {
+            document.body.classList.remove(themes[currentThemeIndex]);
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            document.body.classList.add(themes[currentThemeIndex]);
+        });
+
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+            });
+        });
+
+        // Hover effects for project cards
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'scale(1.05)';
+                card.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+                card.style.boxShadow = 'none';
             });
         });
     </script>
@@ -103,6 +177,25 @@
         body.dark-theme {
             background-color: #222;
             color: #fff;
+        }
+
+        body.light-theme {
+            background-color: #fff;
+            color: #222;
+        }
+
+        body.blue-theme {
+            background-color: #001f3f;
+            color: #fff;
+        }
+
+        #particle-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         header {
@@ -139,21 +232,8 @@
         .hero {
             text-align: center;
             padding: 2rem 1rem;
-            background: #f4f4f4;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        body.dark-theme .hero {
-            background: #333;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
         }
 
         .hero h1 {
@@ -168,9 +248,14 @@
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
+            transition: background 0.3s ease;
         }
 
-        .about, .skills, .projects, .contact {
+        .cta:hover {
+            background: #444;
+        }
+
+        .about, .skills, .projects, .testimonials, .contact {
             padding: 2rem 1rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -188,50 +273,51 @@
             padding: 1rem;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: popIn 1s ease-in-out;
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
         }
 
         body.dark-theme .skill-card {
             background: #444;
         }
 
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
         }
 
-        .project-card {
+        .timeline-item {
             background: #f4f4f4;
             padding: 1rem;
+            border-left: 4px solid #333;
             border-radius: 5px;
+            position: relative;
+        }
+
+        .timeline-item h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        body.dark-theme .timeline-item {
+            background: #444;
+            border-color: #888;
+        }
+
+        .testimonial-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .testimonial {
+            padding: 1rem;
+            border-radius: 5px;
+            background: #f4f4f4;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: slideIn 1s ease-in-out;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        body.dark-theme .project-card {
+        body.dark-theme .testimonial {
             background: #444;
         }
 
