@@ -1,33 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Add a viewport meta tag for responsiveness -->
-    <title>nielpz - GitHub Pages</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nielpz Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Welcome to My GitHub.io Page</h1>
+        <nav>
+            <div class="logo">nielpz</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button id="theme-toggle">Toggle Theme</button></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="#section1">Home</a></li>
-            <li><a href="#section2">About</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section id="section1">
-            <h1>Github Link</h1>
-            <a href="https://github.com/nielpz/">Click</a>
-        </section>
-        <section id="section2">
 
+    <main>
+        <section class="hero">
+            <h1>Hi, I'm Niel</h1>
+            <p>A passionate developer crafting elegant solutions to complex problems.</p>
+            <a href="#projects" class="cta">View My Work</a>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Me</h2>
+            <p>I am a developer with experience in web design, front-end development, and creating efficient, user-friendly applications.</p>
+        </section>
+
+        <section id="projects" class="projects">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Project One</h3>
+                    <p>A brief description of the project. <a href="#">View on GitHub</a></p>
+                </div>
+                <div class="project-card">
+                    <h3>Project Two</h3>
+                    <p>A brief description of the project. <a href="#">View on GitHub</a></p>
+                </div>
+                <div class="project-card">
+                    <h3>Project Three</h3>
+                    <p>A brief description of the project. <a href="#">View on GitHub</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out via email or connect on GitHub.</p>
+            <a href="mailto:youremail@example.com" class="cta">Email Me</a>
+            <a href="https://github.com/nielpz" target="_blank" class="cta">Visit My GitHub</a>
         </section>
     </main>
+
     <footer>
-        <p>&copy; 2023 nielpz</p>
+        <p>&copy; 2024 nielpz. All rights reserved.</p>
     </footer>
-    <script src="script.js"></script>
+
+    <script>
+        // Toggle between light and dark mode
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        body.dark-theme {
+            background-color: #222;
+            color: #fff;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: #f4f4f4;
+        }
+
+        body.dark-theme .hero {
+            background: #333;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .cta {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .about, .projects, .contact {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .project-card {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-theme .project-card {
+            background: #444;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: #fff;
+        }
+    </style>
 </body>
 </html>
