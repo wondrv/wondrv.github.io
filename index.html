@@ -1,332 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wondrv Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Note Slides - Cinta & Hubungan</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+    }
+
+    .slide {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    .note {
+      max-width: 800px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .number {
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #e67e22;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #d35400;
+    }
+
+    .dark-mode button {
+      background-color: #d35400;
+    }
+
+    .status-info {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar-container {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 5px;
+      background-color: #ddd;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #e67e22;
+      transition: width 0.5s ease-out;
+    }
+
+    .fullscreen-btn {
+      position: absolute;
+      top: 1rem;
+      right: 120px;
+    }
+
+    .dark-toggle-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .note {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="particle-background"></div>
-    <header>
-        <nav>
-            <div class="logo">wondrv</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#timeline">Timeline</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><button id="theme-selector">Select Theme</button></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section class="hero">
-            <h1>Hi, I'm Niel</h1>
-            <p>A passionate developer crafting elegant solutions to complex problems.</p>
-            <a href="#projects" class="cta">View My Work</a>
-        </section>
+<!-- Tombol Dark Mode -->
+<button class="dark-toggle-btn" id="darkModeToggle">🌙 Dark Mode</button>
 
-        <section id="about" class="about" data-aos="fade-right">
-            <h2>About Me</h2>
-            <p>I am a developer with experience in web design, front-end development, and creating efficient, user-friendly applications.</p>
-        </section>
+<!-- Tombol Fullscreen -->
+<button class="fullscreen-btn" onclick="toggleFullScreen()">🖥️ Fullscreen</button>
 
-        <section id="skills" class="skills" data-aos="fade-up">
-            <h2>Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">HTML</div>
-                <div class="skill-card">CSS</div>
-                <div class="skill-card">JavaScript</div>
-                <div class="skill-card">React</div>
-                <div class="skill-card">Python</div>
-                <div class="skill-card">Node.js</div>
-            </div>
-        </section>
+<!-- Progress Bar -->
+<div class="progress-bar-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
 
-        <section id="timeline" class="timeline" data-aos="fade-left">
-            <h2>Timeline</h2>
-            <div class="timeline-container">
-                <div class="timeline-item">
-                    <h3>2024</h3>
-                    <p>Started my journey as a web developer and built my first project portfolio.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>2023</h3>
-                    <p>Interned at a tech startup and learned about agile development practices.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>2022</h3>
-                    <p>Graduated with a degree in Informatics and began exploring AI technologies.</p>
-                </div>
-            </div>
-        </section>
+<!-- Status Info -->
+<div class="status-info" id="statusInfo">Note 1 dari 10</div>
 
-        <section id="projects" class="projects" data-aos="zoom-in">
-            <h2>Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>Project One</h3>
-                    <p>A brief description of the project. <a href="#">View on GitHub</a></p>
-                </div>
-                <div class="project-card">
-                    <h3>Project Two</h3>
-                    <p>A brief description of the project. <a href="#">View on GitHub</a></p>
-                </div>
-                <div class="project-card">
-                    <h3>Project Three</h3>
-                    <p>A brief description of the project. <a href="#">View on GitHub</a></p>
-                </div>
-            </div>
-        </section>
+<!-- Slide 1 -->
+<div class="slide active">
+  <div class="number">Note 1</div>
+  <div class="note">
+    Dulu aku pikir, punya pasangan itu ga perlu yang giman gimana. Yang penting sayang, yang penting tetap bareng. Kalau lagi bete terus dia diem, wajar aku ikutan diem, nanti juga baikan sendiri. Kalo sibuk, ya udah, dia pasti ngerti. Toh nanti saling sayang, saling kangen.<br><br>
+    Lama lama aku sadar, perempuan ga cuma butuh ditemenin, tapi juga diperhatiin. Dia ga cuma butuh diyakinkan sekali, tapi terus menerus.<br><br>
+    Pujian "kamu cantik banget hari ini" yg dulu aku piker cukup sekali, ternyata perlu diulang ulang, bukan karena dia ga percaya diri, tapi karena dia mau tau apakah aku masih melihatnya dengan cara yg sama.<br><br>
+    Hubungan bukan soal berharap seseorang akan selalu mengerti, tapi soal bagaimana kita memastikan mereka ga perlu menebak nebak.
+  </div>
+</div>
 
-        <section id="testimonials" class="testimonials" data-aos="fade-up">
-            <h2>Testimonials</h2>
-            <div class="testimonial-container">
-                <div class="testimonial">
-                    <p>"Niel is a fantastic developer with a keen eye for design!"</p>
-                    <h3>- Colleague A</h3>
-                </div>
-                <div class="testimonial">
-                    <p>"His projects always exceed expectations."</p>
-                    <h3>- Client B</h3>
-                </div>
-                <div class="testimonial">
-                    <p>"Creative, dedicated, and professional in every aspect."</p>
-                    <h3>- Colleague C</h3>
-                </div>
-            </div>
-        </section>
+<!-- Slide 2 -->
+<div class="slide">
+  <div class="number">Note 2</div>
+  <div class="note">
+    Jadi kalau marahnya perempuanmu ditanggapi, debatnya ditemani, dan ternyata yg kamu sampaikan itu memang masuk akal, ada beberapa celah yg nunjukin kalau sebenernya yg salah itu dia, itu bakalan nambah sebelnya, percayalah.<br><br>
+    Soalnya kalau perasaan didebat sama logika, ngga bakal nemu ujungnya. Perasaan nggak butuh menang, dia cuma butuh dipahami. Sementara logika nggak peduli siapa yg tersakiti, yg penting ada yg benar dan ada yg salah.<br><br>
+    Makanya, kadang yg bikin dia makin marah bukan karena kamu bener, tapi karena dia nggak pengen merasa sendirian dengan emosinya. Karena yg perempuan butuhkan bukan pembelaan, tapi keberpihakan.<br><br>
+    Dia cuma mau merasa aman, tau kalau ada seseorang yg tetap memilihnya, bahkan saat dia tidak ada di posisi terbaiknya.
+  </div>
+</div>
 
-        <section id="contact" class="contact" data-aos="fade-up">
-            <h2>Contact Me</h2>
-            <p>Feel free to reach out via email or connect on GitHub.</p>
-            <a href="mailto:youremail@example.com" class="cta">Email Me</a>
-            <a href="https://github.com/wondrv" target="_blank" class="cta">Visit My GitHub</a>
-        </section>
-    </main>
+<!-- Slide 3 -->
+<div class="slide">
+  <div class="number">Note 3</div>
+  <div class="note">
+    Laki-laki sering ngebatin setelah debat panjang, "sebenernya pengen ngajak komunikasi, tapi karena salah paham kemarin, kayaknya nanti aja. Nunggu dia reda emosinya"<br><br>
+    Jadi dia memilih diam. Bukan karena nggak peduli, tapi karena merasa itu yg terbaik. Memberi ruang, memberi waktu, membiarkan semuanya mendingin sebelum mulai bicara lagi.<br><br>
+    Padahal di sisi lain, perempuan justru menunggu. Bukan menunggu waktu reda, tapi menunggu dirinya dicari. Menunggu seseorang yg meski kemarin mereka berdebat hebat, tetap ingin bicara duluan. Yg meski ada salah paham, tetap memilih untuk meredakan, bukan menunda.<br><br>
+    Karena bagi perempuan, diamnya dia bukan berarti ingin dibiarkan sendiri. Kadang justru sebaliknya, diamnya adalah cara lain untuk bertanya, "kamu masih butuh aku, kan?"
+  </div>
+</div>
 
-    <footer>
-        <p>&copy; 2024 wondrv. All rights reserved.</p>
-    </footer>
+<!-- Slide 4 -->
+<div class="slide">
+  <div class="number">Note 4</div>
+  <div class="note">
+    Perempuan kadang mempertanyakan kenapa seseorang bisa mencintainya, ketika dia sendiri sulit menemukan alasan untuk menyayangi dirinya. Dia melihat kasih sayang sebagai beban, bukan karena dia tidak menginginkannya, tapi karena dia merasa tidak mampu membalas dengan cara yg sama.<br><br>
+    Dan terkadang, dalam upayanya melindungi dirinya dari rasa sakit yg dia yakini akan datang, dia justru menciptakan luka yang baru, bukan hanya untuk dirinya sendiri, tapi juga untuk orang yg tulus mencintainya.<br><br>
+    Maka dengan menjadi lelaki, aku tidak akan memaksa. Aku hadir, berulang kali. Karena aku mengerti, perempuan itu bukan tidak ingin dicintai. Dia hanya belum tau bagaimana caranya percaya bahwa ada seseorang yg memilihnya tanpa syarat. Dan jika yg dibutuhkan adalah waktu, maka aku rela menjadi seseorang yg tinggal lebih lama.
+  </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-    <script>
-        // Initialize AOS animations
-        AOS.init();
+<!-- Slide 5 -->
+<div class="slide">
+  <div class="number">Note 5</div>
+  <div class="note">
+    Sekarang baru sadar kalo pasangan yg mau tumbuh bareng tuh bukan yg cumin iya iya aja, tapi yg selalu bawel ke kita.<br><br>
+    Dia selalu mengutarakan masalah yg perlu diselesaikan dalam hubungan. Jangan piker dia terus nyerang lu, tapi lu harus tau kalo dia itu selalu ingin memperbaiki hubungan jadi lebih baik lagi. Dia ngutarain masalah agar kita ga ngulang kesalahan yg sama.<br><br>
+    Dia ga minta lu untuk jadi sempurna, dia cuma minta lu peduli sama hubungan dan bisa evaluasi sama-sama.
+  </div>
+</div>
 
-        // Initialize Particle.js background
-        particlesJS('particle-background', {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1 },
-                "line_linked": { "enable": true }
-            }
-        });
+<!-- Slide 6 -->
+<div class="slide">
+  <div class="number">Note 6</div>
+  <div class="note">
+    Sekarang baru tau kalo hubungan yg sehat itu bukan hubungan yg ga pernah berantem tapi yg bisa nyelesain masalah bareng-bareng.<br><br>
+    Sesimpel ketika ada masalah ga fokus untuk saling menyalahkan apalagi saling membiarkan, tapi fokus sama solusi dari masalahnya. Mau sebesar apapun masalahnya tetep yg jadi tujuan utamanya adalah hubungan yg lebih baik lagi.<br><br>
+    Jangan sampe membenci pasangan karna suatu masalah, selesaikan masalahnya bukan hubungannya.
+  </div>
+</div>
 
-        // Theme Selector with multiple options
-        const themes = ["dark-theme", "light-theme", "blue-theme"];
-        let currentThemeIndex = 0;
+<!-- Slide 7 -->
+<div class="slide">
+  <div class="number">Note 7</div>
+  <div class="note">
+    Justru kalau dia itu adalah perempuan yg kita mau, setiap apapun yg dia pengenin, dalam batasan yg "masuk akal", kita jadi lebih tergerak untuk membantu dirinya mencapai itu. "Her happiness makes me even happier."<br><br>
+    Kalaupun ngga dapet targetnya, bukan ngga bisa yaa. Perempuan juga ngga bakal merendahkan, ngoceh dengan mereatapi kenapa gitu aja ngga bisa. Melainkan bilangnya: "Yaudah gapapa, next time kita coba bareng ya. Tapi makasih ya sayang udah mau mengusahakan aku."<br><br>
+    Soalnya tanpa diminta pun, dia bisa mengusahakan sendiri, tapi dia pengen lihat seberapa jauh kamu mau ikut serta dalam keinginannya. Karena buat dia, kebahagiaan itu bukan cuma dari apa yg dia punya, tapi juga dari siapa yg ikut berusaha.
+  </div>
+</div>
 
-        const themeSelector = document.getElementById('theme-selector');
-        themeSelector.addEventListener('click', () => {
-            document.body.classList.remove(themes[currentThemeIndex]);
-            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            document.body.classList.add(themes[currentThemeIndex]);
-        });
+<!-- Slide 8 -->
+<div class="slide">
+  <div class="number">Note 8</div>
+  <div class="note">
+    Karena dua kepala lebih baik dari satu, mencintainya adalah tentang belajar memahami bahasa yg sering kali tidak terucap.<br><br>
+    Perempuan memilih dari sekian banyak opsi dengan perasaan, bukan karena ngga bisa pakai logika, tapi karena dia tau, ada hal-hal yg tidak bisa sekedar dihitung dengan angka atau ditimbang dengan rasionalitas.<br><br>
+    Keputusan yg diambilnya bukan sekedar "emm, aku mau yg ini aja, lebih bagus", tapi buah dari pertimbangan yg ia simpan rapat-rapat di dadanya. Sesuatu yg kalau diungkap, kadang kita menganggap itu berlebihan.<br><br>
+    Menuruti kemauannya bukan soal tunduk, bukan pula perkara hidup dibawah ketiaknya. Bahwa mempertimbangkan posisi perempuan itu termasuk bentuk bertanggung jawab. Karena sekuat apapun seorang lelaki berdiri, sering kali langkahnya beralaskan doa perempuan yg mencintainya. Doa yg diam-diam menahan bebannya.
+  </div>
+</div>
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+<!-- Slide 9 -->
+<div class="slide">
+  <div class="number">Note 9</div>
+  <div class="note">
+    Semua orang awalnya berpikir menikah dengan orang yg tepat. Padahal semua itu awal dari semua pelajaran.<br><br>
+    Karena ternyata, orang yg tepat pun bisa bikin kamu menangis. Bukan karena dia jahat, tapi karena kalian berdua masih sama-sama belajar. Belajar menyesuaikan luka masa lalu. Belajar menyatukan dua dunia yg tumbuh dengan cara berbeda.<br><br>
+    Menikah itu bukan tentang dapat pasangan yg sempurna, tapi tentang kedua tangan yg cukup kuat buat saling merangkul. Tentang dua kepala yg menjadi satu pendapat. Walaupun kadang sama-sama capek, sama-sama salah arah, dan sama-sama ragu, tapi tetap memilih untuk pulang ke rumah yg sama.<br><br>
+    Jadi, bukan siapa yg paling tepat. Tapi siapa yg mau tetap bertahan, meski kadang merasa salah tempat.
+  </div>
+</div>
 
-        // Hover effects for project cards
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'scale(1.05)';
-                card.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'scale(1)';
-                card.style.boxShadow = 'none';
-            });
-        });
-    </script>
+<!-- Slide 10 -->
+<div class="slide">
+  <div class="number">Note 10</div>
+  <div class="note">
+    Beberapa laki-laki masih percaya kalau perempuan diciptakan untuk taat. Padahal taat tanpa dihormati itu bukan dicintai, itu paksaan yg dibungkus suatu kewajiban. Seolah keberhargaan dirinya cuma diukur dari seberapa banyak dia menurut.<br><br>
+    Perempuan memang bisa jadi pendengar yg baik, bisa jadi penenang yg hebat, bisa menundukkan suara dan egonya. Tapi itu semua bukan karena dia lemah, tapi karena dia memilih untuk mencintai dengan cara yg damai.<br><br>
+    Kalau kamu mau ditaati, tunjukkan dulu bahwa kamu bisa jadi pemimpin yg layak diikuti. Bukan dengan nada tinggi, tapi dengan hati yg mau mengerti dan menghargai.<br><br>
+    Karena perempuan bukan diciptakan untuk ditundukkan, tapi untuk berjalan berdampingan dan dengan hati yg tetap merasa aman.
+  </div>
+</div>
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            line-height: 1.6;
+<!-- Navigation Buttons -->
+<div class="nav-buttons">
+  <button onclick="prevSlide()">❮ Prev</button>
+  <button onclick="nextSlide()">Next ❯</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  let autoPlayInterval = null;
+  const totalSlides = slides.length;
+
+  function showSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+    current = index;
+    updateStatus();
+    updateProgressBar();
+  }
+
+  function nextSlide() {
+    if (current < totalSlides - 1) {
+      pauseAutoPlay();
+      showSlide(current + 1);
+    }
+  }
+
+  function prevSlide() {
+    if (current > 0) {
+      pauseAutoPlay();
+      showSlide(current - 1);
+    }
+  }
+
+  function updateStatus() {
+    document.getElementById("statusInfo").textContent = `Note ${current + 1} dari ${totalSlides}`;
+  }
+
+  function updateProgressBar() {
+    const progress = ((current + 1) / totalSlides) * 100;
+    document.getElementById("progressBar").style.width = progress + "%";
+  }
+
+  // Dark Mode Toggle
+  const toggleBtn = document.getElementById('darkModeToggle');
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+  });
+
+  // Keyboard Arrow Navigation
+  window.addEventListener('keydown', (e) => {
+    if (e.key === "ArrowLeft") prevSlide();
+    if (e.key === "ArrowRight") nextSlide();
+  });
+
+  // Auto Play
+  function startAutoPlay() {
+    if (!autoPlayInterval) {
+      autoPlayInterval = setInterval(() => {
+        if (current < totalSlides - 1) {
+          showSlide(current + 1);
+        } else {
+          clearInterval(autoPlayInterval);
+          autoPlayInterval = null;
         }
+      }, 5000); // Setiap 5 detik
+    }
+  }
 
-        body.dark-theme {
-            background-color: #222;
-            color: #fff;
-        }
+  function pauseAutoPlay() {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
 
-        body.light-theme {
-            background-color: #fff;
-            color: #222;
-        }
+  // Toggle Fullscreen
+  function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
 
-        body.blue-theme {
-            background-color: #001f3f;
-            color: #fff;
-        }
+  // Initialize
+  showSlide(current);
+  startAutoPlay();
+</script>
 
-        #particle-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-links li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 2rem 1rem;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-        }
-
-        .cta {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background: #333;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-        .cta:hover {
-            background: #444;
-        }
-
-        .about, .skills, .projects, .testimonials, .contact {
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 1rem;
-            text-align: center;
-        }
-
-        .skill-card {
-            background: #f4f4f4;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        body.dark-theme .skill-card {
-            background: #444;
-        }
-
-        .timeline-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .timeline-item {
-            background: #f4f4f4;
-            padding: 1rem;
-            border-left: 4px solid #333;
-            border-radius: 5px;
-            position: relative;
-        }
-
-        .timeline-item h3 {
-            margin: 0;
-            color: #333;
-        }
-
-        body.dark-theme .timeline-item {
-            background: #444;
-            border-color: #888;
-        }
-
-        .testimonial-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            text-align: center;
-        }
-
-        .testimonial {
-            padding: 1rem;
-            border-radius: 5px;
-            background: #f4f4f4;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        body.dark-theme .testimonial {
-            background: #444;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background: #333;
-            color: #fff;
-        }
-    </style>
 </body>
 </html>
