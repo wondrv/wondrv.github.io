@@ -142,7 +142,7 @@
             z-index: -1;
         }
 
-        /* Navigation */
+        /* Navigation - FIXED STYLES */
         .navbar {
             position: fixed;
             top: 0;
@@ -163,16 +163,25 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
-            display: flex;
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
             align-items: center;
-            justify-content: space-between;
             height: 70px;
+            gap: 2rem;
         }
 
         .nav-logo {
             font-size: 1.5rem;
             font-weight: 800;
             color: var(--primary-color);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            justify-self: start;
+        }
+
+        .nav-logo:hover {
+            color: var(--secondary-color);
+            transform: scale(1.05);
         }
 
         .logo-dot {
@@ -183,6 +192,10 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+            margin: 0;
+            padding: 0;
+            justify-self: center;
+            justify-content: center;
         }
 
         .nav-link {
@@ -192,9 +205,10 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: var(--radius-md);
             transition: all var(--transition-fast);
+            white-space: nowrap;
         }
 
         .nav-link:hover,
@@ -203,10 +217,16 @@
             background: rgba(102, 126, 234, 0.1);
         }
 
+        .nav-link i {
+            font-size: 0.9rem;
+            min-width: 16px;
+        }
+
         .nav-controls {
             display: flex;
             align-items: center;
             gap: 1rem;
+            justify-self: end;
         }
 
         #theme-toggle {
@@ -1051,8 +1071,42 @@
             font-weight: 600;
         }
 
-        /* Responsive Design */
+        /* Responsive Design - UPDATED */
+        @media (max-width: 1024px) {
+            .nav-container {
+                grid-template-columns: auto 1fr auto;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .nav-link {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .nav-link span {
+                display: none;
+            }
+            
+            .nav-link i {
+                font-size: 1.1rem;
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-container {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 1rem;
+            }
+            
+            .nav-logo {
+                margin-right: 0;
+            }
+            
             .nav-menu {
                 position: fixed;
                 top: 70px;
@@ -1064,10 +1118,16 @@
                 padding: 2rem;
                 box-shadow: var(--shadow-lg);
                 transition: right var(--transition-normal);
+                justify-content: flex-start;
+                gap: 1rem;
             }
             
             .nav-menu.active {
                 right: 0;
+            }
+            
+            .nav-link span {
+                display: inline;
             }
             
             .hamburger {
@@ -1134,10 +1194,6 @@
                 padding: 0 1rem;
             }
             
-            .nav-container {
-                padding: 0 1rem;
-            }
-            
             .section-title {
                 font-size: 2rem;
             }
@@ -1165,20 +1221,14 @@
     <!-- Particles background -->
     <div id="particles-js"></div>
 
-    <!-- Navigation -->
+    <!-- Navigation - FIXED -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
+            <a href="#home" class="nav-logo">
                 <span class="logo-text">wondrv</span>
-                <span class="logo-dot"></span>
-            </div>
+                <span class="logo-dot">.</span>
+            </a>
             <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link active" data-section="home">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a href="#about" class="nav-link" data-section="about">
                         <i class="fas fa-user"></i>
@@ -1706,7 +1756,7 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+                <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
@@ -1735,7 +1785,6 @@
                             </div>
                         </div>
                         <div class="contact-item">
-                                                    <div class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
