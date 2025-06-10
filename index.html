@@ -142,7 +142,7 @@
             z-index: -1;
         }
 
-        /* Navigation - FIXED STYLES */
+        /* Navigation - ENHANCED */
         .navbar {
             position: fixed;
             top: 0;
@@ -164,7 +164,7 @@
             margin: 0 auto;
             padding: 0 2rem;
             display: grid;
-            grid-template-columns: 200px 1fr 200px;
+            grid-template-columns: 200px 1fr 250px;
             align-items: center;
             height: 70px;
             gap: 2rem;
@@ -229,7 +229,8 @@
             justify-self: end;
         }
 
-        #theme-toggle {
+        /* Enhanced Theme Toggle */
+        .theme-toggle {
             background: none;
             border: 2px solid var(--border-color);
             color: var(--text-secondary);
@@ -241,12 +242,317 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        #theme-toggle:hover {
+        .theme-toggle:hover {
             border-color: var(--primary-color);
             color: var(--primary-color);
-            transform: rotate(180deg);
+        }
+
+        .theme-toggle.switching {
+            animation: themeSwitch 0.5s ease-in-out;
+        }
+
+        @keyframes themeSwitch {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+        }
+
+        .language-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .language-toggle:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            min-width: 120px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+            z-index: 100;
+        }
+
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .language-option:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        .language-option.active {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1001;
+        }
+
+        .ai-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-fast);
+            animation: aiPulse 3s infinite;
+        }
+
+        .ai-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        @keyframes aiPulse {
+            0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(102, 126, 234, 0.4); }
+            50% { box-shadow: var(--shadow-lg), 0 0 0 10px rgba(102, 126, 234, 0); }
+        }
+
+        .ai-chat {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.9);
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-chat.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .ai-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .ai-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .ai-status {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #48bb78;
+            animation: statusBlink 2s infinite;
+        }
+
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .ai-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-input-container {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            transition: border-color var(--transition-fast);
+        }
+
+        .ai-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .ai-send {
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .ai-send:hover {
+            transform: scale(1.05);
+        }
+
+        .ai-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            max-width: 80%;
+            align-self: flex-start;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typingDot 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingDot {
+            0%, 60%, 100% { transform: scale(1); opacity: 0.5; }
+            30% { transform: scale(1.2); opacity: 1; }
         }
 
         .hamburger {
@@ -933,66 +1239,6 @@
             min-height: 120px;
         }
 
-        /* Footer */
-        .footer {
-            background: var(--bg-tertiary);
-            padding: 2rem 0 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-        }
-
-        .footer-left p {
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all var(--transition-fast);
-        }
-
-        .footer-social a:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-bottom p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
         /* Timeline Styles */
         .timeline {
             padding: 6rem 0;
@@ -1071,6 +1317,66 @@
             font-weight: 600;
         }
 
+        /* Footer */
+        .footer {
+            background: var(--bg-tertiary);
+            padding: 2rem 0 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .footer-left p {
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .footer-social a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
         /* Responsive Design - UPDATED */
         @media (max-width: 1024px) {
             .nav-container {
@@ -1093,6 +1399,11 @@
             
             .nav-link i {
                 font-size: 1.1rem;
+            }
+
+            .ai-chat {
+                width: 320px;
+                height: 450px;
             }
         }
 
@@ -1197,6 +1508,21 @@
             .section-title {
                 font-size: 2rem;
             }
+
+            .ai-chat {
+                width: 90vw;
+                height: 70vh;
+                right: 5vw;
+            }
+
+            .ai-assistant {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .language-dropdown {
+                right: -50px;
+            }
         }
 
         /* Hidden class for loading */
@@ -1214,14 +1540,14 @@
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
-            <div class="loading-text">Loading amazing portfolio...</div>
+            <div class="loading-text" data-text="loading">Loading amazing portfolio...</div>
         </div>
     </div>
 
     <!-- Particles background -->
     <div id="particles-js"></div>
 
-    <!-- Navigation - FIXED -->
+    <!-- Navigation - ENHANCED -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo">
@@ -1232,43 +1558,62 @@
                 <li class="nav-item">
                     <a href="#about" class="nav-link" data-section="about">
                         <i class="fas fa-user"></i>
-                        <span>About</span>
+                        <span data-text="about">About</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#skills" class="nav-link" data-section="skills">
                         <i class="fas fa-code"></i>
-                        <span>Skills</span>
+                        <span data-text="skills">Skills</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#timeline" class="nav-link" data-section="timeline">
                         <i class="fas fa-clock"></i>
-                        <span>Timeline</span>
+                        <span data-text="timeline">Timeline</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#projects" class="nav-link" data-section="projects">
                         <i class="fas fa-briefcase"></i>
-                        <span>Projects</span>
+                        <span data-text="projects">Projects</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#testimonials" class="nav-link" data-section="testimonials">
                         <i class="fas fa-star"></i>
-                        <span>Testimonials</span>
+                        <span data-text="testimonials">Testimonials</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#contact" class="nav-link" data-section="contact">
                         <i class="fas fa-envelope"></i>
-                        <span>Contact</span>
+                        <span data-text="contact">Contact</span>
                     </a>
                 </li>
             </ul>
             <div class="nav-controls">
-                <button id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-moon"></i>
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="language-toggle" id="language-toggle">
+                        <i class="fas fa-globe"></i>
+                        <span id="current-language">EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="language-dropdown">
+                        <button class="language-option active" data-lang="en">
+                            <i class="fas fa-flag-usa"></i>
+                            <span>English</span>
+                        </button>
+                        <button class="language-option" data-lang="id">
+                            <i class="fas fa-flag"></i>
+                            <span>Bahasa Indonesia</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Enhanced Theme Toggle -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun"></i>
                 </button>
                 <div class="hamburger" id="hamburger">
                     <span></span>
@@ -1279,6 +1624,36 @@
         </div>
     </nav>
 
+    <!-- AI Assistant -->
+    <div class="ai-assistant">
+        <button class="ai-toggle" id="ai-toggle" aria-label="Open AI Assistant">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="ai-chat" id="ai-chat">
+            <div class="ai-header">
+                <div class="ai-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-info">
+                    <h3 data-text="ai-name">Portfolio Assistant</h3>
+                    <div class="ai-status">
+                        <div class="status-dot"></div>
+                        <span data-text="ai-status">Online</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-messages" id="ai-messages">
+                <!-- Messages will be added here dynamically -->
+            </div>
+            <div class="ai-input-container">
+                <textarea class="ai-input" id="ai-input" rows="1" data-placeholder="ask-ai" placeholder="Ask me anything about Niel's portfolio..."></textarea>
+                <button class="ai-send" id="ai-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Main content -->
     <main>
         <!-- Hero Section -->
@@ -1286,23 +1661,23 @@
             <div class="hero-content" data-aos="fade-up">
                 <div class="hero-text">
                     <p class="hero-greeting">
-                        <span class="wave">👋</span> Hey there! I'm
+                        <span class="wave">👋</span> <span data-text="hero-greeting">Hey there! I'm</span>
                     </p>
                     <h1 class="hero-name">
                         <span class="typing-text">Niel</span>
                     </h1>
                     <p class="hero-description">
-                        I craft <span class="highlight">elegant solutions</span> to complex problems, 
+                        <span data-text="hero-description">I craft <span class="highlight">elegant solutions</span> to complex problems, 
                         building <span class="highlight">beautiful</span> and <span class="highlight">functional</span> 
-                        web experiences that make a difference.
+                        web experiences that make a difference.</span>
                     </p>
                     <div class="hero-buttons">
                         <a href="#projects" class="btn btn-primary">
-                            <span>View My Work</span>
+                            <span data-text="view-work">View My Work</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                         <a href="#contact" class="btn btn-secondary">
-                            <span>Let's Talk</span>
+                            <span data-text="lets-talk">Let's Talk</span>
                             <i class="fas fa-coffee"></i>
                         </a>
                     </div>
@@ -1330,7 +1705,7 @@
                 </div>
             </div>
             <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="800">
-                <div class="scroll-text">Scroll to explore</div>
+                <div class="scroll-text" data-text="scroll-explore">Scroll to explore</div>
                 <div class="scroll-arrow">
                     <i class="fas fa-chevron-down"></i>
                 </div>
@@ -1341,8 +1716,8 @@
         <section id="about" class="about">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">About Me</h2>
-                    <p class="section-subtitle">Get to know the person behind the code</p>
+                    <h2 class="section-title" data-text="about-title">About Me</h2>
+                    <p class="section-subtitle" data-text="about-subtitle">Get to know the person behind the code</p>
                 </div>
                 <div class="about-content">
                     <div class="about-image" data-aos="fade-right">
@@ -1358,13 +1733,13 @@
                     </div>
                     <div class="about-text" data-aos="fade-left">
                         <div class="about-description">
-                            <p>
+                            <p data-text="about-description-1">
                                 I'm a passionate <strong>Full-Stack Developer</strong> with a love for creating 
                                 digital experiences that are not just functional, but truly memorable. 
                                 My journey in tech started with curiosity and has evolved into a mission 
                                 to build solutions that make people's lives easier.
                             </p>
-                            <p>
+                            <p data-text="about-description-2">
                                 When I'm not coding, you'll find me exploring new technologies, 
                                 contributing to open-source projects, or enjoying a good cup of coffee 
                                 while planning my next big project.
@@ -1373,21 +1748,21 @@
                         <div class="about-stats">
                             <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
                                 <div class="stat-number" data-count="50">0</div>
-                                <div class="stat-label">Projects Completed</div>
+                                <div class="stat-label" data-text="projects-completed">Projects Completed</div>
                             </div>
                             <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
                                 <div class="stat-number" data-count="1000">0</div>
-                                <div class="stat-label">GitHub Stars</div>
+                                <div class="stat-label" data-text="github-stars">GitHub Stars</div>
                             </div>
                             <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
                                 <div class="stat-number" data-count="365">0</div>
-                                <div class="stat-label">Days of Code</div>
+                                <div class="stat-label" data-text="days-code">Days of Code</div>
                             </div>
                         </div>
                         <div class="about-actions">
                             <a href="#" class="btn btn-primary" target="_blank">
                                 <i class="fas fa-download"></i>
-                                <span>Download Resume</span>
+                                <span data-text="download-resume">Download Resume</span>
                             </a>
                             <div class="social-links">
                                 <a href="https://github.com/wondrv" target="_blank" aria-label="GitHub">
@@ -1413,8 +1788,8 @@
         <section id="skills" class="skills">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">Skills & Technologies</h2>
-                    <p class="section-subtitle">The tools I use to bring ideas to life</p>
+                    <h2 class="section-title" data-text="skills-title">Skills & Technologies</h2>
+                    <p class="section-subtitle" data-text="skills-subtitle">The tools I use to bring ideas to life</p>
                 </div>
                 
                 <div class="skills-content">
@@ -1422,7 +1797,7 @@
                         <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
                             <div class="category-header">
                                 <i class="fas fa-laptop-code"></i>
-                                <h3>Frontend</h3>
+                                <h3 data-text="frontend">Frontend</h3>
                             </div>
                             <div class="skills-grid">
                                 <div class="skill-item" data-skill="95">
@@ -1475,7 +1850,7 @@
                         <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
                             <div class="category-header">
                                 <i class="fas fa-server"></i>
-                                <h3>Backend</h3>
+                                <h3 data-text="backend">Backend</h3>
                             </div>
                             <div class="skills-grid">
                                 <div class="skill-item" data-skill="80">
@@ -1499,7 +1874,7 @@
                                             <div class="skill-progress" data-width="75%"></div>
                                         </div>
                                     </div>
-                                </div>
+                                                                </div>
                                 <div class="skill-item" data-skill="70">
                                     <div class="skill-icon">
                                         <i class="fas fa-database"></i>
@@ -1528,7 +1903,7 @@
                         <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
                             <div class="category-header">
                                 <i class="fas fa-tools"></i>
-                                <h3>Tools & Others</h3>
+                                <h3 data-text="tools">Tools & Others</h3>
                             </div>
                             <div class="skills-grid">
                                 <div class="skill-item" data-skill="85">
@@ -1586,21 +1961,21 @@
         <section id="timeline" class="timeline">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">My Journey</h2>
-                    <p class="section-subtitle">Key milestones in my development career</p>
+                    <h2 class="section-title" data-text="timeline-title">My Journey</h2>
+                    <p class="section-subtitle" data-text="timeline-subtitle">Key milestones in my development career</p>
                 </div>
                 <div class="timeline-container">
                     <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
-                        <h3>2024 - Present</h3>
-                        <p>Full-Stack Developer focusing on modern web technologies. Built multiple production applications using React, Node.js, and cloud platforms. Currently exploring AI integration in web applications.</p>
+                        <h3 data-text="timeline-2024">2024 - Present</h3>
+                        <p data-text="timeline-2024-desc">Full-Stack Developer focusing on modern web technologies. Built multiple production applications using React, Node.js, and cloud platforms. Currently exploring AI integration in web applications.</p>
                     </div>
                     <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
-                        <h3>2023</h3>
-                        <p>Completed advanced web development bootcamp. Gained expertise in JavaScript frameworks, backend development, and database management. Built first major portfolio projects.</p>
+                        <h3 data-text="timeline-2023">2023</h3>
+                        <p data-text="timeline-2023-desc">Completed advanced web development bootcamp. Gained expertise in JavaScript frameworks, backend development, and database management. Built first major portfolio projects.</p>
                     </div>
                     <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
-                        <h3>2022</h3>
-                        <p>Started programming journey with HTML, CSS, and JavaScript. Fell in love with creating interactive web experiences and decided to pursue web development as a career.</p>
+                        <h3 data-text="timeline-2022">2022</h3>
+                        <p data-text="timeline-2022-desc">Started programming journey with HTML, CSS, and JavaScript. Fell in love with creating interactive web experiences and decided to pursue web development as a career.</p>
                     </div>
                 </div>
             </div>
@@ -1610,15 +1985,15 @@
         <section id="projects" class="projects">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">Featured Projects</h2>
-                    <p class="section-subtitle">Some of my best work that I'm proud to share</p>
+                    <h2 class="section-title" data-text="projects-title">Featured Projects</h2>
+                    <p class="section-subtitle" data-text="projects-subtitle">Some of my best work that I'm proud to share</p>
                 </div>
 
                 <div class="project-filters" data-aos="fade-up" data-aos-delay="200">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="web">Web Apps</button>
-                    <button class="filter-btn" data-filter="mobile">Mobile</button>
-                    <button class="filter-btn" data-filter="ai">AI/ML</button>
+                    <button class="filter-btn active" data-filter="all" data-text="filter-all">All</button>
+                    <button class="filter-btn" data-filter="web" data-text="filter-web">Web Apps</button>
+                    <button class="filter-btn" data-filter="mobile" data-text="filter-mobile">Mobile</button>
+                    <button class="filter-btn" data-filter="ai" data-text="filter-ai">AI/ML</button>
                 </div>
 
                 <div class="projects-grid">
@@ -1638,12 +2013,12 @@
                         </div>
                         <div class="project-content">
                             <div class="project-header">
-                                <h3 class="project-title">E-Commerce Platform</h3>
+                                <h3 class="project-title" data-text="project-ecommerce">E-Commerce Platform</h3>
                                 <div class="project-status">
-                                    <span class="status-badge featured">Featured</span>
+                                    <span class="status-badge featured" data-text="featured">Featured</span>
                                 </div>
                             </div>
-                            <p class="project-description">
+                            <p class="project-description" data-text="project-ecommerce-desc">
                                 A full-stack e-commerce solution with React, Node.js, and MongoDB. 
                                 Features include user authentication, payment integration, and admin dashboard.
                             </p>
@@ -1672,12 +2047,12 @@
                         </div>
                         <div class="project-content">
                             <div class="project-header">
-                                <h3 class="project-title">AI-Powered Chatbot</h3>
+                                <h3 class="project-title" data-text="project-ai-chatbot">AI-Powered Chatbot</h3>
                                 <div class="project-status">
-                                    <span class="status-badge new">New</span>
+                                    <span class="status-badge new" data-text="new">New</span>
                                 </div>
                             </div>
-                            <p class="project-description">
+                            <p class="project-description" data-text="project-ai-chatbot-desc">
                                 An intelligent chatbot using natural language processing to provide 
                                 customer support with 95% accuracy rate.
                             </p>
@@ -1706,9 +2081,9 @@
                         </div>
                         <div class="project-content">
                             <div class="project-header">
-                                <h3 class="project-title">Task Management App</h3>
+                                <h3 class="project-title" data-text="project-task-management">Task Management App</h3>
                             </div>
-                            <p class="project-description">
+                            <p class="project-description" data-text="project-task-management-desc">
                                 A collaborative task management tool with real-time updates, 
                                 drag-and-drop functionality, and team collaboration features.
                             </p>
@@ -1723,10 +2098,10 @@
                 </div>
 
                 <div class="projects-cta" data-aos="fade-up" data-aos-delay="500">
-                    <p>Want to see more of my work?</p>
+                    <p data-text="projects-cta-text">Want to see more of my work?</p>
                     <a href="https://github.com/wondrv" class="btn btn-secondary" target="_blank">
                         <i class="fab fa-github"></i>
-                        <span>View All Projects</span>
+                        <span data-text="view-all-projects">View All Projects</span>
                     </a>
                 </div>
             </div>
@@ -1736,32 +2111,32 @@
         <section id="testimonials" class="testimonials">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">What Others Say</h2>
-                    <p class="section-subtitle">Feedback from colleagues and clients</p>
+                    <h2 class="section-title" data-text="testimonials-title">What Others Say</h2>
+                    <p class="section-subtitle" data-text="testimonials-subtitle">Feedback from colleagues and clients</p>
                 </div>
                 <div class="testimonial-container">
                     <div class="testimonial" data-aos="fade-up" data-aos-delay="100">
-                        <p>"Niel is a fantastic developer with a keen eye for design and user experience. His projects always exceed expectations and are delivered on time."</p>
-                        <h3>- Sarah Johnson, Project Manager</h3>
+                        <p data-text="testimonial-1">"Niel is a fantastic developer with a keen eye for design and user experience. His projects always exceed expectations and are delivered on time."</p>
+                        <h3 data-text="testimonial-1-author">- Sarah Johnson, Project Manager</h3>
                     </div>
                     <div class="testimonial" data-aos="fade-up" data-aos-delay="200">
-                        <p>"Working with Niel was a pleasure. He brings creative solutions to complex problems and has excellent communication skills."</p>
-                        <h3>- Mark Chen, Lead Developer</h3>
+                        <p data-text="testimonial-2">"Working with Niel was a pleasure. He brings creative solutions to complex problems and has excellent communication skills."</p>
+                        <h3 data-text="testimonial-2-author">- Mark Chen, Lead Developer</h3>
                     </div>
                     <div class="testimonial" data-aos="fade-up" data-aos-delay="300">
-                        <p>"Creative, dedicated, and professional in every aspect. Niel delivered exactly what we needed and more."</p>
-                        <h3>- Lisa Rodriguez, Client</h3>
+                        <p data-text="testimonial-3">"Creative, dedicated, and professional in every aspect. Niel delivered exactly what we needed and more."</p>
+                        <h3 data-text="testimonial-3-author">- Lisa Rodriguez, Client</h3>
                     </div>
                 </div>
             </div>
         </section>
 
-                <!-- Contact Section -->
+        <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
-                    <h2 class="section-title">Let's Work Together</h2>
-                    <p class="section-subtitle">Ready to bring your ideas to life? Let's talk!</p>
+                    <h2 class="section-title" data-text="contact-title">Let's Work Together</h2>
+                    <p class="section-subtitle" data-text="contact-subtitle">Ready to bring your ideas to life? Let's talk!</p>
                 </div>
 
                 <div class="contact-content">
@@ -1771,7 +2146,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="contact-details">
-                                <h3>Email</h3>
+                                <h3 data-text="email">Email</h3>
                                 <p>hello@wondrv.dev</p>
                             </div>
                         </div>
@@ -1780,7 +2155,7 @@
                                 <i class="fas fa-phone"></i>
                             </div>
                             <div class="contact-details">
-                                <h3>Phone</h3>
+                                <h3 data-text="phone">Phone</h3>
                                 <p>+1 (555) 123-4567</p>
                             </div>
                         </div>
@@ -1789,7 +2164,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div class="contact-details">
-                                <h3>Location</h3>
+                                <h3 data-text="location">Location</h3>
                                 <p>San Francisco, CA</p>
                             </div>
                         </div>
@@ -1798,31 +2173,31 @@
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div class="contact-details">
-                                <h3>Response Time</h3>
-                                <p>Within 24 hours</p>
+                                <h3 data-text="response-time">Response Time</h3>
+                                <p data-text="response-time-value">Within 24 hours</p>
                             </div>
                         </div>
                     </div>
 
                     <form class="contact-form" data-aos="fade-left">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name" data-text="form-name">Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email" data-text="form-email">Email</label>
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="subject">Subject</label>
+                            <label for="subject" data-text="form-subject">Subject</label>
                             <input type="text" id="subject" name="subject" required>
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
+                            <label for="message" data-text="form-message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">
-                            <span>Send Message</span>
+                            <span data-text="send-message">Send Message</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
@@ -1837,7 +2212,7 @@
             <div class="footer-content">
                 <div class="footer-left">
                     <div class="footer-logo">wondrv</div>
-                    <p>Building digital experiences that matter.</p>
+                    <p data-text="footer-tagline">Building digital experiences that matter.</p>
                 </div>
                 <div class="footer-right">
                     <div class="footer-social">
@@ -1857,7 +2232,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 wondrv. All rights reserved. Made with ❤️ and lots of ☕</p>
+                <p data-text="footer-copyright">&copy; 2025 wondrv. All rights reserved. Made with ❤️ and lots of ☕</p>
             </div>
         </div>
     </footer>
@@ -1867,6 +2242,402 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                'about': 'About',
+                'skills': 'Skills',
+                'timeline': 'Timeline',
+                'projects': 'Projects',
+                'testimonials': 'Testimonials',
+                'contact': 'Contact',
+                
+                // Loading
+                'loading': 'Loading amazing portfolio...',
+                
+                // AI Assistant
+                'ai-name': 'Portfolio Assistant',
+                'ai-status': 'Online',
+                'ask-ai': 'Ask me anything about Niel\'s portfolio...',
+                'ai-welcome': 'Hi! I\'m your portfolio assistant. I can help you learn more about Niel\'s skills, projects, and experience. What would you like to know?',
+                
+                // Hero Section
+                'hero-greeting': 'Hey there! I\'m',
+                'hero-description': 'I craft elegant solutions to complex problems, building beautiful and functional web experiences that make a difference.',
+                'view-work': 'View My Work',
+                'lets-talk': 'Let\'s Talk',
+                'scroll-explore': 'Scroll to explore',
+                
+                // About Section
+                'about-title': 'About Me',
+                'about-subtitle': 'Get to know the person behind the code',
+                'about-description-1': 'I\'m a passionate Full-Stack Developer with a love for creating digital experiences that are not just functional, but truly memorable. My journey in tech started with curiosity and has evolved into a mission to build solutions that make people\'s lives easier.',
+                'about-description-2': 'When I\'m not coding, you\'ll find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee while planning my next big project.',
+                'projects-completed': 'Projects Completed',
+                'github-stars': 'GitHub Stars',
+                'days-code': 'Days of Code',
+                'download-resume': 'Download Resume',
+                
+                // Skills Section
+                'skills-title': 'Skills & Technologies',
+                'skills-subtitle': 'The tools I use to bring ideas to life',
+                'frontend': 'Frontend',
+                'backend': 'Backend',
+                'tools': 'Tools & Others',
+                
+                // Timeline Section
+                'timeline-title': 'My Journey',
+                'timeline-subtitle': 'Key milestones in my development career',
+                'timeline-2024': '2024 - Present',
+                'timeline-2024-desc': 'Full-Stack Developer focusing on modern web technologies. Built multiple production applications using React, Node.js, and cloud platforms. Currently exploring AI integration in web applications.',
+                'timeline-2023': '2023',
+                'timeline-2023-desc': 'Completed advanced web development bootcamp. Gained expertise in JavaScript frameworks, backend development, and database management. Built first major portfolio projects.',
+                'timeline-2022': '2022',
+                'timeline-2022-desc': 'Started programming journey with HTML, CSS, and JavaScript. Fell in love with creating interactive web experiences and decided to pursue web development as a career.',
+                
+                // Projects Section
+                'projects-title': 'Featured Projects',
+                'projects-subtitle': 'Some of my best work that I\'m proud to share',
+                'filter-all': 'All',
+                'filter-web': 'Web Apps',
+                'filter-mobile': 'Mobile',
+                'filter-ai': 'AI/ML',
+                'featured': 'Featured',
+                'new': 'New',
+                'project-ecommerce': 'E-Commerce Platform',
+                'project-ecommerce-desc': 'A full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.',
+                'project-ai-chatbot': 'AI-Powered Chatbot',
+                'project-ai-chatbot-desc': 'An intelligent chatbot using natural language processing to provide customer support with 95% accuracy rate.',
+                'project-task-management': 'Task Management App',
+                'project-task-management-desc': 'A collaborative task management tool with real-time updates, drag-and-drop functionality, and team collaboration features.',
+                'projects-cta-text': 'Want to see more of my work?',
+                'view-all-projects': 'View All Projects',
+                
+                // Testimonials Section
+                'testimonials-title': 'What Others Say',
+                'testimonials-subtitle': 'Feedback from colleagues and clients',
+                'testimonial-1': '"Niel is a fantastic developer with a keen eye for design and user experience. His projects always exceed expectations and are delivered on time."',
+                'testimonial-1-author': '- Sarah Johnson, Project Manager',
+                'testimonial-2': '"Working with Niel was a pleasure. He brings creative solutions to complex problems and has excellent communication skills."',
+                'testimonial-2-author': '- Mark Chen, Lead Developer',
+                'testimonial-3': '"Creative, dedicated, and professional in every aspect. Niel delivered exactly what we needed and more."',
+                'testimonial-3-author': '- Lisa Rodriguez, Client',
+                
+                // Contact Section
+                'contact-title': 'Let\'s Work Together',
+                'contact-subtitle': 'Ready to bring your ideas to life? Let\'s talk!',
+                'email': 'Email',
+                'phone': 'Phone',
+                'location': 'Location',
+                'response-time': 'Response Time',
+                'response-time-value': 'Within 24 hours',
+                'form-name': 'Name',
+                'form-email': 'Email',
+                'form-subject': 'Subject',
+                'form-message': 'Message',
+                'send-message': 'Send Message',
+                
+                // Footer
+                'footer-tagline': 'Building digital experiences that matter.',
+                'footer-copyright': '© 2025 wondrv. All rights reserved. Made with ❤️ and lots of ☕'
+            },
+            id: {
+                // Navigation
+                'about': 'Tentang',
+                'skills': 'Keahlian',
+                'timeline': 'Timeline',
+                'projects': 'Proyek',
+                'testimonials': 'Testimoni',
+                'contact': 'Kontak',
+                
+                // Loading
+                'loading': 'Memuat portfolio yang menakjubkan...',
+                
+                // AI Assistant
+                'ai-name': 'Asisten Portfolio',
+                'ai-status': 'Online',
+                'ask-ai': 'Tanyakan apa saja tentang portfolio Niel...',
+                'ai-welcome': 'Hai! Saya asisten portfolio Anda. Saya dapat membantu Anda mempelajari lebih lanjut tentang keahlian, proyek, dan pengalaman Niel. Apa yang ingin Anda ketahui?',
+                
+                // Hero Section
+                'hero-greeting': 'Halo! Saya',
+                'hero-description': 'Saya membuat solusi elegan untuk masalah kompleks, membangun pengalaman web yang indah dan fungsional yang membuat perbedaan.',
+                'view-work': 'Lihat Karya Saya',
+                'lets-talk': 'Mari Bicara',
+                'scroll-explore': 'Gulir untuk menjelajahi',
+                
+                // About Section
+                'about-title': 'Tentang Saya',
+                'about-subtitle': 'Mengenal orang di balik kode',
+                'about-description-1': 'Saya seorang Full-Stack Developer yang bersemangat dengan kecintaan untuk menciptakan pengalaman digital yang tidak hanya fungsional, tetapi benar-benar berkesan. Perjalanan saya di bidang teknologi dimulai dengan rasa ingin tahu dan telah berkembang menjadi misi untuk membangun solusi yang membuat hidup orang lebih mudah.',
+                'about-description-2': 'Ketika saya tidak sedang coding, Anda akan menemukan saya menjelajahi teknologi baru, berkontribusi pada proyek open-source, atau menikmati secangkir kopi sambil merencanakan proyek besar berikutnya.',
+                'projects-completed': 'Proyek Selesai',
+                'github-stars': 'GitHub Stars',
+                'days-code': 'Hari Coding',
+                'download-resume': 'Unduh Resume',
+                
+                // Skills Section
+                'skills-title': 'Keahlian & Teknologi',
+                'skills-subtitle': 'Alat yang saya gunakan untuk mewujudkan ide',
+                'frontend': 'Frontend',
+                'backend': 'Backend',
+                'tools': 'Alat & Lainnya',
+                
+                // Timeline Section
+                'timeline-title': 'Perjalanan Saya',
+                'timeline-subtitle': 'Tonggak penting dalam karir pengembangan saya',
+                'timeline-2024': '2024 - Sekarang',
+                'timeline-2024-desc': 'Full-Stack Developer yang fokus pada teknologi web modern. Membangun beberapa aplikasi produksi menggunakan React, Node.js, dan platform cloud. Saat ini mengeksplorasi integrasi AI dalam aplikasi web.',
+                'timeline-2023': '2023',
+                'timeline-2023-desc': 'Menyelesaikan bootcamp pengembangan web lanjutan. Memperoleh keahlian dalam framework JavaScript, pengembangan backend, dan manajemen database. Membangun proyek portfolio utama pertama.',
+                'timeline-2022': '2022',
+                'timeline-2022-desc': 'Memulai perjalanan pemrograman dengan HTML, CSS, dan JavaScript. Jatuh cinta dengan menciptakan pengalaman web interaktif dan memutuskan untuk mengejar pengembangan web sebagai karir.',
+                
+                // Projects Section
+                'projects-title': 'Proyek Unggulan',
+                'projects-subtitle': 'Beberapa karya terbaik saya yang saya banggakan',
+                'filter-all': 'Semua',
+                'filter-web': 'Aplikasi Web',
+                'filter-mobile': 'Mobile',
+                'filter-ai': 'AI/ML',
+                'featured': 'Unggulan',
+                'new': 'Baru',
+                'project-ecommerce': 'Platform E-Commerce',
+                'project-ecommerce-desc': 'Solusi e-commerce full-stack dengan React, Node.js, dan MongoDB. Fitur termasuk autentikasi pengguna, integrasi pembayaran, dan dashboard admin.',
+                'project-ai-chatbot': 'Chatbot Bertenaga AI',
+                'project-ai-chatbot-desc': 'Chatbot cerdas menggunakan pemrosesan bahasa alami untuk memberikan dukungan pelanggan dengan tingkat akurasi 95%.',
+                'project-task-management': 'Aplikasi Manajemen Tugas',
+                'project-task-management-desc': 'Alat manajemen tugas kolaboratif dengan pembaruan real-time, fungsionalitas drag-and-drop, dan fitur kolaborasi tim.',
+                'projects-cta-text': 'Ingin melihat lebih banyak karya saya?',
+                'view-all-projects': 'Lihat Semua Proyek',
+                
+                // Testimonials Section
+                'testimonials-title': 'Apa Kata Mereka',
+                'testimonials-subtitle': 'Umpan balik dari kolega dan klien',
+                'testimonial-1': '"Niel adalah developer yang fantastis dengan mata yang tajam untuk desain dan pengalaman pengguna. Proyeknya selalu melebihi ekspektasi dan diselesaikan tepat waktu."',
+                'testimonial-1-author': '- Sarah Johnson, Project Manager',
+                'testimonial-2': '"Bekerja dengan Niel sangat menyenangkan. Dia membawa solusi kreatif untuk masalah kompleks dan memiliki keterampilan komunikasi yang sangat baik."',
+                'testimonial-2-author': '- Mark Chen, Lead Developer',
+                'testimonial-3': '"Kreatif, berdedikasi, dan profesional dalam setiap aspek. Niel memberikan persis apa yang kami butuhkan dan lebih."',
+                'testimonial-3-author': '- Lisa Rodriguez, Klien',
+                
+                // Contact Section
+                'contact-title': 'Mari Bekerja Sama',
+                'contact-subtitle': 'Siap mewujudkan ide Anda? Mari bicara!',
+                'email': 'Email',
+                'phone': 'Telepon',
+                'location': 'Lokasi',
+                'response-time': 'Waktu Respons',
+                'response-time-value': 'Dalam 24 jam',
+                'form-name': 'Nama',
+                'form-email': 'Email',
+                'form-subject': 'Subjek',
+                'form-message': 'Pesan',
+                'send-message': 'Kirim Pesan',
+                
+                // Footer
+                'footer-tagline': 'Membangun pengalaman digital yang bermakna.',
+                'footer-copyright': '© 2025 wondrv. Semua hak dilindungi. Dibuat dengan ❤️ dan banyak ☕'
+            }
+        };
+
+        // AI Assistant responses
+        const aiResponses = {
+            en: {
+                welcome: "Hi! I'm your portfolio assistant. I can help you learn more about Niel's skills, projects, and experience. What would you like to know?",
+                skills: "Niel is proficient in React (95%), JavaScript (90%), HTML5 (85%), CSS3 (88%), Node.js (80%), Python (75%), MongoDB (70%), and many other technologies. He's particularly strong in frontend development and full-stack solutions.",
+                projects: "Niel has completed 50+ projects including an E-Commerce Platform with React and Node.js, an AI-Powered Chatbot with 95% accuracy, and a collaborative Task Management App. You can view all his projects on GitHub!",
+                experience: "Niel started his programming journey in 2022 and has been working as a Full-Stack Developer since 2024. He's passionate about creating elegant solutions and has experience with modern web technologies and AI integration.",
+                contact: "You can reach Niel at hello@wondrv.dev or through the contact form below. He typically responds within 24 hours and is always excited to discuss new projects and opportunities!",
+                default: "I can help you learn about Niel's skills, projects, experience, or how to contact him. What specific information are you looking for?"
+            },
+            id: {
+                welcome: "Hai! Saya asisten portfolio Anda. Saya dapat membantu Anda mempelajari lebih lanjut tentang keahlian, proyek, dan pengalaman Niel. Apa yang ingin Anda ketahui?",
+                skills: "Niel mahir dalam React (95%), JavaScript (90%), HTML5 (85%), CSS3 (88%), Node.js (80%), Python (75%), MongoDB (70%), dan banyak teknologi lainnya. Dia sangat kuat dalam pengembangan frontend dan solusi full-stack.",
+                projects: "Niel telah menyelesaikan 50+ proyek termasuk Platform E-Commerce dengan React dan Node.js, Chatbot Bertenaga AI dengan akurasi 95%, dan Aplikasi Manajemen Tugas kolaboratif. Anda dapat melihat semua proyeknya di GitHub!",
+                experience: "Niel memulai perjalanan pemrogramannya pada 2022 dan telah bekerja sebagai Full-Stack Developer sejak 2024. Dia bersemangat menciptakan solusi elegan dan memiliki pengalaman dengan teknologi web modern dan integrasi AI.",
+                contact: "Anda dapat menghubungi Niel di hello@wondrv.dev atau melalui formulir kontak di bawah. Dia biasanya merespons dalam 24 jam dan selalu senang mendiskusikan proyek dan peluang baru!",
+                default: "Saya dapat membantu Anda mempelajari tentang keahlian, proyek, pengalaman Niel, atau cara menghubunginya. Informasi spesifik apa yang Anda cari?"
+            }
+        };
+
+        // Current language
+        let currentLanguage = 'en';
+
+        // Translation function
+        function translatePage(lang) {
+            currentLanguage = lang;
+            const elements = document.querySelectorAll('[data-text]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-text');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Update language toggle
+            document.getElementById('current-language').textContent = lang.toUpperCase();
+            
+            // Update language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Store language preference
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // AI Assistant functionality
+        class AIAssistant {
+            constructor() {
+                this.isOpen = false;
+                this.messages = [];
+                this.initializeElements();
+                this.attachEventListeners();
+                this.addWelcomeMessage();
+            }
+
+            initializeElements() {
+                this.toggle = document.getElementById('ai-toggle');
+                this.chat = document.getElementById('ai-chat');
+                this.messages = document.getElementById('ai-messages');
+                this.input = document.getElementById('ai-input');
+                this.send = document.getElementById('ai-send');
+            }
+
+            attachEventListeners() {
+                this.toggle.addEventListener('click', () => this.toggleChat());
+                this.send.addEventListener('click', () => this.sendMessage());
+                this.input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                // Auto-resize textarea
+                this.input.addEventListener('input', () => {
+                    this.input.style.height = 'auto';
+                    this.input.style.height = this.input.scrollHeight + 'px';
+                });
+
+                // Close chat when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!this.chat.contains(e.target) && !this.toggle.contains(e.target)) {
+                        if (this.isOpen) {
+                            this.toggleChat();
+                        }
+                    }
+                });
+            }
+
+            toggleChat() {
+                this.isOpen = !this.isOpen;
+                this.chat.classList.toggle('active', this.isOpen);
+                
+                if (this.isOpen) {
+                    this.input.focus();
+                }
+            }
+
+            addWelcomeMessage() {
+                const welcomeText = aiResponses[currentLanguage].welcome;
+                this.addMessage(welcomeText, 'ai');
+            }
+
+            addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                messageDiv.textContent = text;
+                
+                this.messages.appendChild(messageDiv);
+                this.messages.scrollTop = this.messages.scrollHeight;
+            }
+
+            addTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <span>AI is typing</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                `;
+                
+                this.messages.appendChild(typingDiv);
+                this.messages.scrollTop = this.messages.scrollHeight;
+                
+                return typingDiv;
+            }
+
+            removeTypingIndicator(indicator) {
+                if (indicator && indicator.parentNode) {
+                    indicator.parentNode.removeChild(indicator);
+                }
+            }
+
+            async sendMessage() {
+                const message = this.input.value.trim();
+                if (!message) return;
+
+                // Add user message
+                this.addMessage(message, 'user');
+                this.input.value = '';
+                this.input.style.height = 'auto';
+
+                // Disable send button
+                this.send.disabled = true;
+
+                // Add typing indicator
+                const typingIndicator = this.addTypingIndicator();
+
+                // Simulate AI processing delay
+                await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+
+                // Remove typing indicator
+                this.removeTypingIndicator(typingIndicator);
+
+                // Generate AI response
+                const response = this.generateResponse(message);
+                this.addMessage(response, 'ai');
+
+                // Re-enable send button
+                this.send.disabled = false;
+                this.input.focus();
+            }
+
+            generateResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                const responses = aiResponses[currentLanguage];
+
+                if (lowerMessage.includes('skill') || lowerMessage.includes('keahlian') || lowerMessage.includes('technology') || lowerMessage.includes('teknologi')) {
+                    return responses.skills;
+                } else if (lowerMessage.includes('project') || lowerMessage.includes('proyek') || lowerMessage.includes('work') || lowerMessage.includes('karya')) {
+                    return responses.projects;
+                } else if (lowerMessage.includes('experience') || lowerMessage.includes('pengalaman') || lowerMessage.includes('background') || lowerMessage.includes('journey')) {
+                    return responses.experience;
+                } else if (lowerMessage.includes('contact') || lowerMessage.includes('kontak') || lowerMessage.includes('email') || lowerMessage.includes('reach')) {
+                    return responses.contact;
+                } else {
+                    return responses.default;
+                }
+            }
+        }
+
+        // Initialize AI Assistant
+        let aiAssistant;
+
         // Loading Screen
         window.addEventListener('load', function() {
             setTimeout(function() {
@@ -1985,18 +2756,59 @@
             retina_detect: true
         });
 
-        // Theme Toggle
+        // Enhanced Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
         const themeIcon = themeToggle.querySelector('i');
 
         themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-theme');
+            // Add switching animation
+            themeToggle.classList.add('switching');
             
-            if (body.classList.contains('dark-theme')) {
-                themeIcon.className = 'fas fa-sun';
-            } else {
-                themeIcon.className = 'fas fa-moon';
+            setTimeout(() => {
+                body.classList.toggle('dark-theme');
+                
+                if (body.classList.contains('dark-theme')) {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+                
+                // Store theme preference
+                localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+                
+                themeToggle.classList.remove('switching');
+            }, 250);
+        });
+
+        // Language Switcher
+        const languageToggle = document.getElementById('language-toggle');
+        const languageDropdown = document.getElementById('language-dropdown');
+        const languageOptions = document.querySelectorAll('.language-option');
+
+        languageToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        });
+
+        languageOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.getAttribute('data-lang');
+                translatePage(lang);
+                languageDropdown.classList.remove('active');
+                
+                // Update AI assistant with new language
+                if (aiAssistant) {
+                    aiAssistant.messages.innerHTML = '';
+                    aiAssistant.addWelcomeMessage();
+                }
+            });
+        });
+
+        // Close language dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('active');
             }
         });
 
@@ -2182,7 +2994,7 @@
             
             // Simple form validation
             if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields');
+                alert(currentLanguage === 'en' ? 'Please fill in all fields' : 'Harap isi semua bidang');
                 return;
             }
             
@@ -2190,11 +3002,15 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
-            submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.innerHTML = currentLanguage === 'en' ? 
+                '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>' :
+                '<span>Mengirim...</span><i class="fas fa-spinner fa-spin"></i>';
             submitBtn.disabled = true;
             
             setTimeout(() => {
-                alert('Thank you for your message! I\'ll get back to you soon.');
+                alert(currentLanguage === 'en' ? 
+                    'Thank you for your message! I\'ll get back to you soon.' :
+                    'Terima kasih atas pesan Anda! Saya akan segera menghubungi Anda.');
                 this.reset();
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -2244,6 +3060,28 @@
         `;
         document.head.appendChild(style);
 
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved preferences
+            const savedTheme = localStorage.getItem('theme');
+            const savedLanguage = localStorage.getItem('preferred-language') || 'en';
+            
+            // Apply saved theme
+            if (savedTheme === 'light') {
+                body.classList.remove('dark-theme');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                body.classList.add('dark-theme');
+                themeIcon.className = 'fas fa-sun';
+            }
+            
+            // Apply saved language
+            translatePage(savedLanguage);
+            
+            // Initialize AI Assistant
+            aiAssistant = new AIAssistant();
+        });
+
         // Console message for developers
         console.log(`
         ╔═══════════════════════════════════════╗
@@ -2255,8 +3093,13 @@
         ║                                       ║
         ║   📧 hello@wondrv.dev                ║
         ║   🐙 github.com/wondrv               ║
+        ║                                       ║
+        ║   New Features:                       ║
+        ║   🤖 AI Assistant                    ║
+        ║   🎨 Enhanced Theme Switcher         ║
+        ║   🌐 Language Switcher (EN/ID)       ║
         ╚═══════════════════════════════════════╝
         `);
     </script>
 </body>
-</html>
+</html>   
